@@ -75,6 +75,14 @@ class ApiService {
   set query(newQuery) {
     this.query = newQuery;
   }
+
+  get pages() {
+    return this.page;
+  }
+  
+  set pages(newPage) {
+    this.page = newPage;
+  }
 }
 
 export default ApiService;
