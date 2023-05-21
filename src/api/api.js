@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '84c383365f1d91dcec85ad7e4d3952ec';
 
@@ -10,11 +12,10 @@ class ApiService {
 
   async fetchTrendingMovies() {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `${BASE_URL}${this.requestType}/movie/day?api_key=${API_KEY}&page=${this.page}`
       );
-      const popularMovies = await response.json();
-      return popularMovies;
+      return response.data.results;
     } catch (error) {
       console.log(error);
     }
@@ -56,33 +57,33 @@ class ApiService {
       }
   }
 
-  async fetchMovieReviews() {
-    try {
-        const response = await fetch(
-          `${BASE_URL}movie/${id}/reviews?api_key=${API_KEY}`
-        );
-        const moviesReviews = await response.json();
-        return moviesReviews;
-      } catch (error) {
-        console.log(error);
-      }
-  }
+  // async fetchMovieReviews() {
+  //   try {
+  //       const response = await fetch(
+  //         `${BASE_URL}movie/${id}/reviews?api_key=${API_KEY}`
+  //       );
+  //       const moviesReviews = await response.json();
+  //       return moviesReviews;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  // }
 
-  get query() {
-    return this.query;
-  }
+  // get query() {
+  //   return this.query;
+  // }
 
-  set query(newQuery) {
-    this.query = newQuery;
-  }
+  // set query(newQuery) {
+  //   this.query = newQuery;
+  // }
 
-  get pages() {
-    return this.page;
-  }
+  // get pages() {
+  //   return this.page;
+  // }
   
-  set pages(newPage) {
-    this.page = newPage;
-  }
+  // set pages(newPage) {
+  //   this.page = newPage;
+  // }
 }
 
 export default ApiService;
