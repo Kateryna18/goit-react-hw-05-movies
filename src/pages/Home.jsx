@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import ApiService from 'api/api';
 
 const apiServiceMovies = new ApiService();
@@ -16,12 +17,10 @@ export default function Home() {
     handleFetchMovies();
   }, []);
 
-  // console.log(moviesTrending);
-
   return (
-    <div>
+    <main>
       <h1>Trending today</h1>
-      <ul>{moviesTrending.map(({id, title}) => <li key={id}><p>{title}</p></li>)}</ul>
-    </div>
+      <ul>{moviesTrending.map(({id, title}) => <li key={id}><Link to={`movies/${id}`}><p>{title}</p></Link></li>)}</ul>
+    </main>
   )
 }

@@ -21,13 +21,13 @@ class ApiService {
     }
   }
 
-  async fetchSearchQueryMovies() {
+  async fetchSearchQueryMovies(movie) {
+    console.log(movie)
     try {
-        const response = await fetch(
-          `${BASE_URL}${this.query}/movie?api_key=${API_KEY}&include_adult=false&page=${this.page}`
+        const response = await axios.get(
+          `${BASE_URL}/search/movie?api_key=${API_KEY}&query={movie}&include_adult=false&page=${this.page}`
         );
-        const searchQueryMovies = await response.json();
-        return searchQueryMovies;
+        return response.data.results;
       } catch (error) {
         console.log(error);
       }
@@ -50,8 +50,7 @@ class ApiService {
         const response = await fetch(
           `${BASE_URL}movie/${id}/credits?api_key=${API_KEY}`
         );
-        const moviesActors = await response.json();
-        return moviesActors;
+        return response.cast;
       } catch (error) {
         console.log(error);
       }
