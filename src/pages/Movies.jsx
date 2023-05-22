@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import ApiService from 'api/api';
 
 const apiServiceMovies = new ApiService();
 
 export default function Movies() {
-  const [movie, setMovie] = useState('');
   const [listMovies, setListMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query");
+  const location = useLocation();
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const movieSearch = e.target.elements.query.value;
-  setMovie(movieSearch);
-}
 
 useEffect(() => {
-  if(movie === '') {
-    return
-  }
+  if(!query) return;
 
   async function fetchMoviesSearch() {
-    const moviesSearch = await apiServiceMovies.fetchSearchQueryMovies(movie);
-    console.log(moviesSearch);
+    const moviesSearch = await apiServiceMovies.fetchSearchQueryMovies(query);
     setListMovies(moviesSearch);
   }
   
   fetchMoviesSearch();
-}, [movie])
+}, [query]);
+
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const movieSearch = e.currentTarget.elements.query.value;
+  setSearchParams({ query: movieSearch});
+}
 
 
   return (
@@ -35,7 +36,7 @@ useEffect(() => {
         <input type="text" name="query"/>
         <button>Search</button>
       </form>
-      <ul>{listMovies.map(({id, title}) => <li key={id}><Link to={`${id}`}><p>{title}</p></Link></li>)}</ul>
+      <ul>{listMovies?.map(({id, title}) => <li key={id}><Link to={`${id}`} state={location}><p>{title}</p></Link></li>)}</ul>
     </main>
   )
 }

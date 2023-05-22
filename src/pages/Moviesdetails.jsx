@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams, useLocation } from "react-router-dom";
 import ApiService from 'api/api';
 
 const apiServiceMovies = new ApiService();
@@ -8,6 +8,7 @@ export default function Moviesdetails() {
   const [movieInfo, setMovieInfo] = useState({});
   const [firstRender, setFirstRender] = useState(true);
   const { movieId } = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     if(firstRender) {
@@ -28,6 +29,7 @@ export default function Moviesdetails() {
 
   return (
     <main>
+      <Link to={location.state}>Go Back</Link>
       {movieInfo && <div>
         <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="" />
         <h2>{title}</h2>

@@ -25,7 +25,7 @@ class ApiService {
     console.log(movie)
     try {
         const response = await axios.get(
-          `${BASE_URL}/search/movie?api_key=${API_KEY}&query={movie}&include_adult=false&page=${this.page}`
+          `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${movie}&include_adult=false&page=${this.page}`
         );
         return response.data.results;
       } catch (error) {
