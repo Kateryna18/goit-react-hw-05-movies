@@ -8,7 +8,7 @@ export default function Moviesdetails() {
   const [movieInfo, setMovieInfo] = useState({});
   const { movieId } = useParams();
   const location = useLocation();
-
+  
   useEffect(() => {
     const getMovieInfo = async () => {
       const movieInfo = await fetchMovieDetails(movieId);
