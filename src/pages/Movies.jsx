@@ -31,12 +31,12 @@ const handleSubmit = (e) => {
 
 
   return (
-    <main>
+    <section>
       <form onSubmit={handleSubmit}>
         <input type="text" name="query"/>
         <button>Search</button>
       </form>
       <ul>{listMovies?.map(({id, title}) => <li key={id}><Link to={`${id}`} state={location}><p>{title}</p></Link></li>)}</ul>
-    </main>
+    </section>
   )
 }

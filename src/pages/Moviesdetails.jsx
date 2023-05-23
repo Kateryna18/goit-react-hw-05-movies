@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useParams, useLocation } from "react-router-dom";
-import ApiService from 'api/api';
+import { fetchMovieDetails } from 'api/api';
 
-const apiServiceMovies = new ApiService();
+// const apiServiceMovies = new ApiService();
 
 export default function Moviesdetails() {
   const [movieInfo, setMovieInfo] = useState({});
-  const [firstRender, setFirstRender] = useState(true);
   const { movieId } = useParams();
   const location = useLocation();
+  
 
   useEffect(() => {
-    if(firstRender) {
-      setFirstRender(false);
-      return
-    }
+    const getMovieInfo = async () => {
+      const movieInfo = await fetchMovieDetails(movieId);
+    setMovieInfo(movieInfo);
+  }
 
-    async function fetchMovieDetails() {
-      const movieInfo = await apiServiceMovies.fetchMovieDetails(movieId);
-      setMovieInfo(movieInfo);
-    }
-    
-    fetchMovieDetails()
-  }, [movieId, firstRender])
+    getMovieInfo()
+  }, [movieId])
 
-  const {overview, title, poster_path, vote_count} = movieInfo;
-  console.log(movieInfo);
-
+  const {poster_path, title, vote_count, overview} = movieInfo;
+  
   return (
-    <main>
+    <section>
       <Link to={location.state}>Go Back</Link>
-      {movieInfo && <div>
-        <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="" />
+      {Object.keys(movieInfo).length && <div>
+        <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={title} />
         <h2>{title}</h2>
         <p>{vote_count}</p>
         <h3>Overview</h3>
@@ -48,6 +42,6 @@ export default function Moviesdetails() {
         </li>
       </ul>
       <Outlet/>
-    </main>
+    </section>
   )
 }

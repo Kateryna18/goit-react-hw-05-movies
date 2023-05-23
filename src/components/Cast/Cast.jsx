@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ApiService from 'api/api';
-
-const apiServiceMovies = new ApiService();
+import { fetchMovieActors } from 'api/api';
 
 export default function Cast() {
   const [movieActors, setMovieActors] = useState([]);
   const { movieId } = useParams();
 
   useEffect(() => {
-    async function fetchMovieActors() {
-      const movieActors = await apiServiceMovies.fetchMovieActors(movieId);
+   const getfetchMovieActors = async () => {
+      const movieActors = await fetchMovieActors(movieId);
       setMovieActors(movieActors);
     }
-    fetchMovieActors();
+    getfetchMovieActors();
   }, [movieId]);
 
+  
   return (
-    <div>
-      {movieActors && (
+    <section>
+      <h2>Cast</h2>
+      {movieActors.length && 
         <ul>
-          {movieActors.map(({ name, character, profile_path }) => (
-            <li>
+          {movieActors.map(({ name, character, profile_path, id }) => (
+            <li key={id}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-                alt=""
+                alt={name}
               />
               <h2>{name}</h2>
               <span>Character: </span>
@@ -32,7 +32,7 @@ export default function Cast() {
             </li>
           ))}
         </ul>
-      )}
-    </div>
+      }
+    </section>
   );
 }

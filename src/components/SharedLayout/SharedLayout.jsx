@@ -7,7 +7,9 @@ export default function SharedLayout() {
   return (
     <div>
       <Header/>
+      <main>
       <Outlet />
+      </main>
     </div>
   );
 }

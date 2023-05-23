@@ -3,6 +3,33 @@ import axios from 'axios';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '84c383365f1d91dcec85ad7e4d3952ec';
 
+export const fetchMovieDetails = async (id) => {
+  const response = await fetch(`${BASE_URL}movie/${id}?api_key=${API_KEY}`); 
+  const data = await response.json();
+  return data
+}
+
+export const fetchMovieActors = async (id) => {
+  try {
+      const response = await fetch(`${BASE_URL}movie/${id}/credits?api_key=${API_KEY}`);
+      const data = await response.json();
+      return data.cast;
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+export const fetchMovieReviews = async (id) => {
+  try {
+      const response = await fetch(`${BASE_URL}movie/${id}/reviews?api_key=${API_KEY}`);
+      const data = await response.json();
+      return data.results;
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+
 class ApiService {
   constructor() {
     this.query = '';
@@ -33,36 +60,41 @@ class ApiService {
       }
   }
 
-  async fetchMovieDetails(id) {
-    try {
-        const response = await fetch(
-          `${BASE_URL}movie/${id}?api_key=${API_KEY}`
-        );
-        const moviesDetails = await response.json();
-        return moviesDetails;
-      } catch (error) {
-        console.log(error);
-      }
-  }
+  // fetchMovieDetails(id) {
+  //       fetch(
+  //         `${BASE_URL}movie/${id}?api_key=${API_KEY}`
+  //       ).then(response => {
+  //         if (!response.ok) {
+  //           throw new Error(response.status);
+  //         }
+  //         return response.json();
+  //       })
+  //       // const moviesDetails = await response.json();
+  //     //   return response;
+  //     // } catch (error) {
+  //     //   console.log(error);
+  //     }
+  
 
-  async fetchMovieActors(id) {
-    try {
-        const response = await fetch(
-          `${BASE_URL}movie/${id}/credits?api_key=${API_KEY}`
-        );
-        return response.cast;
-      } catch (error) {
-        console.log(error);
-      }
-  }
+  // async fetchMovieActors(id) {
+  //   try {
+  //       const response = await axios.get(
+  //         `${BASE_URL}movie/${id}/credits?api_key=${API_KEY}`
+  //       );
+  //       return response.cast;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  // }
 
-  // async fetchMovieReviews() {
+  // async fetchMovieReviews(id) {
   //   try {
   //       const response = await fetch(
   //         `${BASE_URL}movie/${id}/reviews?api_key=${API_KEY}`
   //       );
   //       const moviesReviews = await response.json();
-  //       return moviesReviews;
+  //       console.log(moviesReviews.results);
+  //       return moviesReviews.results;
   //     } catch (error) {
   //       console.log(error);
   //     }
