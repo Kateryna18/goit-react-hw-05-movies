@@ -1,0 +1,68 @@
+.button {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 10px;
+    color: black;
+}
+.button::before {
+    content: '\2190';
+}
+
+.card {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.image {
+    width: 250px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.score{
+    margin-bottom: 10px;
+}
+
+.overviewTitle {
+    margin-bottom: 5px;
+}
+
+.overviewText {
+    margin-bottom: 10px;
+}
+
+.genres {
+    margin-bottom: 5px;
+}
+
+.list {
+    display: flex;
+    gap: 5px;
+}
+
+.item {
+    display: flex;
+    gap: 3px;
+    padding: 5px;
+    background-color: #d39a7452;
+    border-radius: 5px;
+    
+}
+.item::before {
+    content: '\1F6C8';
+}
+
+.link {
+    
+    color: black;
+}

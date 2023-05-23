@@ -1,0 +1,26 @@
+.title {
+    margin-bottom: 10px;
+}
+
+.item {
+    padding: 7px;
+    display: flex;
+    gap: 3px;
+
+    border: 2px solid bisque;
+    border-bottom: 0;
+}
+.item:hover, .item:focus {
+    background-color: bisque;
+}
+.item::before {
+    content: "\1F3AC";
+}
+
+.item:last-child {
+    border-bottom: 2px solid bisque;
+}
+
+.link {
+    color:rgb(0, 0, 0);
+}

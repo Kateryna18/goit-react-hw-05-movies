@@ -1,0 +1,17 @@
+.title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 15px;
+
+}
+
+.image {
+    width: 300px;
+    margin-bottom: 5px;
+}

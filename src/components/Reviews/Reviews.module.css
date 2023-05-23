@@ -1,0 +1,12 @@
+.title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.item:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.text {
+    margin-bottom: 5px;
+}

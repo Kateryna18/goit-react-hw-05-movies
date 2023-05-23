@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
-import ApiService from 'api/api';
-
-const apiServiceMovies = new ApiService();
+import { fetchTrendingMovies } from 'api/api';
+import css from './Home.module.css';
 
 export default function Home() {
   const [moviesTrending, setMoviesTrending] = useState([]);
@@ -13,14 +12,14 @@ export default function Home() {
   }, []);
   
   const handleFetchMovies = async () => {
-    const trendingMovies = await apiServiceMovies.fetchTrendingMovies();
+    const trendingMovies = await fetchTrendingMovies();
     setMoviesTrending(trendingMovies);
   }
 
   return (
     <section>
-      <h1>Trending today</h1>
-      <ul>{moviesTrending.map(({id, title}) => <li key={id}><Link to={`movies/${id}`} state={location}><p>{title}</p></Link></li>)}</ul>
+      <h1 className={css.title}>Trending today</h1>
+      <ul className={css.list}>{moviesTrending.map(({id, title}) => <li className={css.item} key={id}><Link className={css.link} to={`movies/${id}`} state={location}><p>{title}</p></Link></li>)}</ul>
     </section>
   )
 }

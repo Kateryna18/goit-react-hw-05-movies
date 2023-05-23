@@ -1,47 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams, useLocation } from "react-router-dom";
+import React, { useEffect, useState, Suspense } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { fetchMovieDetails } from 'api/api';
-
-// const apiServiceMovies = new ApiService();
+import { ColorRing } from 'react-loader-spinner';
+import css from './Moviesdetails.module.css'
 
 export default function Moviesdetails() {
   const [movieInfo, setMovieInfo] = useState({});
   const { movieId } = useParams();
   const location = useLocation();
-  
 
   useEffect(() => {
     const getMovieInfo = async () => {
       const movieInfo = await fetchMovieDetails(movieId);
-    setMovieInfo(movieInfo);
-  }
+      setMovieInfo(movieInfo);
+    };
 
-    getMovieInfo()
-  }, [movieId])
+    getMovieInfo();
+  }, [movieId]);
 
-  const {poster_path, title, vote_count, overview} = movieInfo;
-  
+  const { poster_path, title, vote_count, overview } = movieInfo;
+
   return (
-    <section>
-      <Link to={location.state}>Go Back</Link>
-      {Object.keys(movieInfo).length && <div>
-        <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={title} />
-        <h2>{title}</h2>
-        <p>{vote_count}</p>
-        <h3>Overview</h3>
-        <p>{overview}</p>
-        <h4>Genres</h4>
-        <p></p>
-      </div>}
-      <ul>
-        <li>
-          <Link to="cast">Cast</Link>
-        </li>
-        <li>
-          <Link to="reviews">Reviews</Link>
-        </li>
-      </ul>
-      <Outlet/>
-    </section>
-  )
+    <Suspense
+      fallback={
+        <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+      }
+    >
+      <section>
+        <Link className={css.button} to={location.state}>Go Back</Link>
+        {Object.keys(movieInfo).length && (
+          <div className={css.card}>
+            <img
+              className={css.image}
+              src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+              alt={title}
+            />
+            <div className={css.info}>
+              <div>
+              <h2 className={css.title}>{title}</h2>
+            <p className={css.score}>User score: {vote_count}%</p>
+            <h3 className={css.overviewTitle}>Overview</h3>
+            <p className={css.overviewText}>{overview}</p>
+            <h4 className={css.genres}>Genres</h4>
+            <p></p>
+              </div>
+            <div>
+            <ul className={css.list}>
+          <li className={css.item}>
+            <Link className={css.link} to="cast">Cast</Link>
+          </li>
+          <li className={css.item}>
+            <Link className={css.link} to="reviews">Reviews</Link>
+          </li>
+        </ul>
+            </div>
+            </div>
+          </div>
+        )}
+        <Outlet />
+      </section>
+    </Suspense>
+  );
 }
