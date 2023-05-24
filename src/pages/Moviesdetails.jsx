@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import { Link, Outlet, useParams, useLocation  } from 'react-router-dom';
 import { fetchMovieDetails } from 'api/api';
 import { ColorRing } from 'react-loader-spinner';
 import css from './Moviesdetails.module.css';
@@ -74,12 +74,12 @@ export default function Moviesdetails() {
               </div>
               <ul className={css.list}>
                 <li className={css.item}>
-                  <Link className={css.link} to="cast">
+                  <Link className={css.link} to="cast" state={location.state}>
                     Cast
                   </Link>
                 </li>
                 <li className={css.item}>
-                  <Link className={css.link} to="reviews">
+                  <Link className={css.link} to="reviews" state={location.state}>
                     Reviews
                   </Link>
                 </li>
